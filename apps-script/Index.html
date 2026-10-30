@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Полка — CMS блоки</title><style>:root{font-family:Inter,Arial,sans-serif;color:#26342d;background:#f8f9f5;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0;border-radius:8px;padding:12px 18px;font-weight:600}button:hover{filter:brightness(.94)}button:focus-visible,a:focus-visible{outline:3px solid #78a58a;outline-offset:3px}header{height:86px;border-bottom:1px solid #e3e7df;display:flex;align-items:center;gap:30px;padding:0 6%}.brand{display:flex;gap:10px;align-items:center;font-size:30px;font-weight:800;text-decoration:none;color:#284d39}.dot{color:#87a569}.subtitle{font-size:13px;color:#899087;border-left:1px solid #d8ded4;padding-left:30px}main{max-width:1320px;margin:auto;padding:56px 6%}.heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:48px}.eyebrow{font-size:10px;letter-spacing:2px;color:#798b73;font-weight:bold}h1{font-size:44px;letter-spacing:-1.8px;line-height:1.14;margin:17px 0}h1 span{color:#8b9788}.heading p{font-size:14px;color:#838b80}.primary{background:#315c43;color:white;box-shadow:0 3px 7px #24492b14}.quiet{background:transparent;color:#64735f}.danger{color:#a36056}nav{display:flex;gap:10px;border-bottom:1px solid #dce2d7;align-items:center;flex-wrap:wrap}#tabs{display:flex;gap:6px;flex-wrap:wrap}#tabs button{border-radius:8px 8px 0 0;background:transparent;padding:16px 20px;color:#7b8577}#tabs button.active{background:#e8eee2;color:#31563d;border-bottom:2px solid #426747}.toolbar{display:flex;align-items:center;gap:18px;margin:32px 0 24px}.toolbar>div{display:flex;align-items:center;gap:12px;margin-right:auto}h2{font-size:22px;margin:0}#count{font-size:12px;color:#87917f;background:#e9ede4;border-radius:20px;padding:5px 10px}input,select{background:white;border:1px solid #dce1d6;border-radius:7px;padding:11px 13px;color:#34432f}#search{width:220px;font-size:13px}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.card{padding:0;overflow:hidden;text-align:left;background:white;border:1px solid #e1e6db;box-shadow:0 3px 12px #2a432505}.card iframe{width:100%;height:190px;border:0;background:white;pointer-events:none}.cardInfo{border-top:1px solid #edf0e9;padding:19px;display:flex;justify-content:space-between;align-items:center}.cardInfo strong{font-size:14px}.cardInfo small{display:block;font-weight:400;color:#8d9688;font-size:11px;margin-top:7px}.cardInfo>span{color:#829477}.empty{text-align:center;border:1px dashed #ccd7c4;border-radius:14px;padding:64px 20px;color:#7a8971}.empty>div{font-size:45px}.empty h3{color:#435a39}.empty p{font-size:14px;margin-bottom:25px}dialog{border:1px solid #dbe2d4;border-radius:16px;padding:28px;width: min(1000px,94vw);max-height:92vh;color:#26342d}dialog::backdrop{background:#182a2266;backdrop-filter:blur(3px)}#categoryDialog{max-width:430px}.modalHeading{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.modalHeading h2{margin-top:8px}label{display:block;font-size:13px;font-weight:600;margin:14px 0}label>input,label>select{display:block;width:100%;margin-top:8px}#livePreview{width:100%;height:220px;border:1px solid #dce3d5;border-radius:8px;background:#fff}.previewLabel{font-size:11px;letter-spacing:1px;margin:24px 0 10px}.previewLabel span{float:right;letter-spacing:0;color:#899580}.codeGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.codeHeader{display:flex;justify-content:space-between;align-items:center}.codeHeader button{font-size:12px}textarea{width:100%;height:210px;resize:vertical;border:1px solid #dae1d4;border-radius:8px;padding:15px;background:#f6f8f3;font:13px/1.6 monospace;color:#314b3a;tab-size:2}footer{display:flex;align-items:center;gap:10px;margin-top:18px}.spacer{flex:1}#toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:#263f2e;color:#fff;padding:14px 22px;border-radius:10px;z-index:10;max-width:90vw}@media(max-width:800px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.toolbar{flex-wrap:wrap}.toolbar>div{width:100%}h1{font-size:36px}.heading{gap:15px}.codeGrid{grid-template-columns:1fr}.subtitle{display:none}}@media(max-width:520px){main{padding:32px 5%}.heading{align-items:flex-start;flex-direction:column;margin-bottom:28px}.cards{grid-template-columns:1fr}.toolbar .danger{font-size:12px;padding:10px 0}#search{flex:1;min-width:120px}dialog{padding:18px}footer{flex-wrap:wrap}h1{font-size:34px}}
+</style></head>
+<body>
+<header><a class="brand" href="#">▦ <span>полка<span class="dot">.</span></span></a><span class="subtitle">Личная библиотека CMS-блоков</span></header>
+<main>
+<div class="heading"><div><div class="eyebrow">СОБРАНО ДЛЯ РАБОТЫ</div><h1>Хорошие блоки.<br><span>Всегда под рукой.</span></h1><p>Сохраняйте вёрстку, находите нужное и переносите в CMS.</p></div><button id="addBlock" class="primary">＋ Новый блок</button></div>
+<nav aria-label="Направления"><div id="tabs"></div><button id="addCategory" class="quiet">＋ Направление</button></nav>
+<div class="toolbar"><div><h2 id="categoryTitle"></h2><span id="count"></span></div><input id="search" type="search" placeholder="Поиск по названию…" aria-label="Поиск блоков"><button id="deleteCategory" class="quiet danger">Удалить направление</button></div>
+<section id="cards" class="cards" aria-label="Блоки"></section>
+<div id="empty" class="empty" hidden><div>▧</div><h3>Здесь начинается ваша коллекция</h3><p>Добавьте HTML и CSS первого блока — он появится здесь с предпросмотром.</p><button id="emptyAdd" class="primary">＋ Добавить блок</button></div>
+</main>
+<dialog id="editor"><form id="editForm"><div class="modalHeading"><div><div class="eyebrow">ВАША КОЛЛЕКЦИЯ</div><h2 id="editorTitle">Новый блок</h2></div><button type="button" id="closeEditor" class="quiet" aria-label="Закрыть">✕</button></div><label>Название<input id="blockName" required maxlength="160" placeholder="Например, цитата с акцентом"></label><label>Направление<select id="blockCategory"></select></label><div class="previewLabel">ПРЕДПРОСМОТР <span>обновляется при вводе</span></div><iframe id="livePreview" title="Предпросмотр блока" sandbox=""></iframe><div class="codeGrid"><label><span class="codeHeader">HTML<button type="button" data-copy="html" class="quiet">Копировать</button></span><textarea id="html" spellcheck="false" placeholder="<section>Ваш блок</section>"></textarea></label><label><span class="codeHeader">CSS<button type="button" data-copy="css" class="quiet">Копировать</button></span><textarea id="css" spellcheck="false" placeholder="section { padding: 24px; }"></textarea></label></div><footer><button type="button" id="deleteBlock" class="quiet danger">Удалить блок</button><span class="spacer"></span><button type="button" id="cancelEdit" class="quiet">Отмена</button><button type="submit" class="primary">Сохранить блок</button></footer></form></dialog>
+<dialog id="categoryDialog"><form id="categoryForm"><h2>Новое направление</h2><label>Название<input id="categoryName" required maxlength="160" placeholder="Например, лендинги"></label><footer><button type="button" id="cancelCategory" class="quiet">Отмена</button><button class="primary">Добавить</button></footer></form></dialog>
+<div id="toast" role="status" hidden></div><script>const $ = id => document.getElementById(id);
+let library = {categories: [], blocks: []}, active = null, editing = null, dirty = false;
+let toastTimer;
+function toast(message) { $('toast').textContent = message; $('toast').hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').hidden = true, 3500); }
+async function api(path, method = 'GET', data) {
+  return new Promise((resolve, reject) => {
+    google.script.run
+      .withSuccessHandler(resolve)
+      .withFailureHandler(error => reject(new Error(error.message || 'Ошибка Google Apps Script')))
+      .libraryApi(path, method, data === undefined ? null : data);
+  });
+}
+function preview(html, css) {
+  return '<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src https: data:; font-src https: data:; base-uri \'none\'; form-action \'none\'"><style>body{margin:0;padding:20px;font-family:Arial,sans-serif;overflow-wrap:anywhere}*{box-sizing:border-box}</style></head><body>' + html + '<style>' + css + '</style></body></html>';
+}
+async function refresh() {
+  library = await api('library');
+  if (!library.categories.some(c => c.id === active)) active = library.categories[0]?.id ?? null;
+  render();
+}
+function render() {
+  $('tabs').replaceChildren();
+  for (const category of library.categories) {
+    const button = document.createElement('button'); button.textContent = category.name; button.className = category.id === active ? 'active' : ''; button.setAttribute('aria-pressed', String(category.id === active));
+    button.onclick = () => {active = category.id; $('search').value = ''; render();}; $('tabs').append(button);
+  }
+  const category = library.categories.find(c => c.id === active);
+  $('categoryTitle').textContent = category?.name || 'Создайте направление';
+  $('deleteCategory').hidden = !category;
+  $('addBlock').disabled = !category; $('emptyAdd').hidden = !category;
+  const blocks = library.blocks.filter(b => b.category_id === active && b.name.toLocaleLowerCase().includes($('search').value.toLocaleLowerCase()));
+  $('count').textContent = blocks.length;
+  $('cards').replaceChildren(); $('empty').hidden = !!blocks.length;
+  $('empty').querySelector('h3').textContent = $('search').value ? 'Ничего не найдено' : 'Здесь начинается ваша коллекция';
+  for (const block of blocks) {
+    const card = document.createElement('button'); card.className = 'card'; card.setAttribute('aria-label', 'Открыть блок: ' + block.name);
+    const frame = document.createElement('iframe'); frame.setAttribute('sandbox', ''); frame.tabIndex = -1; frame.title = block.name; frame.loading = 'lazy'; frame.srcdoc = preview(block.html, block.css);
+    const info = document.createElement('div'); info.className = 'cardInfo';
+    const text = document.createElement('div'); const name = document.createElement('strong'); name.textContent = block.name; const detail = document.createElement('small'); detail.textContent = 'HTML + CSS'; text.append(name, detail);
+    const arrow = document.createElement('span'); arrow.textContent = '↗'; info.append(text, arrow); card.append(frame, info); card.onclick = () => openBlock(block); $('cards').append(card);
+  }
+}
+function updatePreview() { $('livePreview').srcdoc = preview($('html').value, $('css').value); }
+function openBlock(block) {
+  editing = block?.id ?? null;
+  $('editorTitle').textContent = block ? 'Ваш блок' : 'Новый блок';
+  $('blockName').value = block?.name || ''; $('html').value = block?.html || ''; $('css').value = block?.css || '';
+  $('blockCategory').replaceChildren(...library.categories.map(c => new Option(c.name, c.id)));
+  $('blockCategory').value = block?.category_id ?? active;
+  $('deleteBlock').hidden = !block; dirty = false; updatePreview(); $('editor').showModal();
+}
+function closeEditor() { if (!dirty || confirm('Закрыть без сохранения изменений?')) $('editor').close(); }
+$('addBlock').onclick = $('emptyAdd').onclick = () => openBlock();
+$('closeEditor').onclick = $('cancelEdit').onclick = closeEditor;
+$('editor').addEventListener('cancel', e => {e.preventDefault(); closeEditor();});
+$('editForm').addEventListener('input', () => {dirty = true; updatePreview();});
+$('search').oninput = render;
+$('editForm').onsubmit = async e => {
+  e.preventDefault(); const submit = e.submitter; submit.disabled = true;
+  try {
+    await api('blocks' + (editing === null ? '' : '/' + editing), editing === null ? 'POST' : 'PUT', {name: $('blockName').value, category_id: Number($('blockCategory').value), html: $('html').value, css: $('css').value});
+    active = Number($('blockCategory').value); dirty = false; $('editor').close(); await refresh(); toast('Блок сохранён');
+  } catch (error) {toast(error.message);} finally {submit.disabled = false;}
+};
+$('deleteBlock').onclick = async () => {
+  if (!confirm('Удалить этот блок без возможности восстановления?')) return;
+  try {await api('blocks/' + editing, 'DELETE'); $('editor').close(); await refresh(); toast('Блок удалён');} catch (error) {toast(error.message);}
+};
+$('addCategory').onclick = () => {$('categoryName').value = ''; $('categoryDialog').showModal();};
+$('cancelCategory').onclick = () => $('categoryDialog').close();
+$('categoryForm').onsubmit = async e => {
+  e.preventDefault(); e.submitter.disabled = true;
+  try {const result = await api('categories', 'POST', {name: $('categoryName').value}); active = result.id; $('categoryDialog').close(); await refresh();} catch (error) {toast(error.message);} finally {e.submitter.disabled = false;}
+};
+$('deleteCategory').onclick = async () => {
+  const count = library.blocks.filter(b => b.category_id === active).length;
+  if (!confirm(`Удалить направление и все его блоки (${count})? Восстановить их будет невозможно.`)) return;
+  try {await api('categories/' + active, 'DELETE'); await refresh();} catch (error) {toast(error.message);}
+};
+for (const button of document.querySelectorAll('[data-copy]')) button.onclick = async () => {
+  const field = $(button.dataset.copy);
+  try {
+    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(field.value);
+    else {field.focus(); field.select(); if (!document.execCommand('copy')) throw new Error();}
+    toast(button.dataset.copy.toUpperCase() + ' скопирован');
+  } catch {field.focus(); field.select(); toast('Нажмите Ctrl+C или ⌘C, чтобы скопировать выделенный код');}
+};
+window.addEventListener('beforeunload', e => {if (dirty && $('editor').open) {e.preventDefault(); e.returnValue = '';}});
+refresh().catch(error => toast('Не удалось загрузить библиотеку: ' + error.message));
+</script>
+</body></html>

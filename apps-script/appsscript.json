@@ -1,0 +1,10 @@
+{
+  "timeZone": "Europe/Samara",
+  "runtimeVersion": "V8",
+  "exceptionLogging": "STACKDRIVER",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/userinfo.email"
+  ],
+  "webapp": {"executeAs": "USER_DEPLOYING", "access": "MYSELF"}
+}
