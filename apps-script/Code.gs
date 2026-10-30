@@ -59,6 +59,11 @@ function libraryApi(path, method, input) {
     } else if ((method === 'POST' && ident === null) || (method === 'PUT' && ident !== null)) {
       if (!input || typeof input.name !== 'string' || !input.name.trim() || input.name.trim().length > 160) throw new Error('Введите название длиной до 160 символов.');
       const record = {id: ident === null ? data.nextId++ : ident, name: input.name.trim()};
+      if (table === 'categories') {
+        const attributes = input.attributes === undefined ? (index >= 0 ? data.categories[index].attributes : '') : input.attributes;
+        if (attributes !== undefined && (typeof attributes !== 'string' || attributes.length > 100000)) throw new Error('Список атрибутов — текст до 100 000 символов.');
+        if (attributes !== undefined) record.attributes = attributes;
+      }
       if (table === 'blocks') {
         if (!data.categories.some(c => c.id === input.category_id)) throw new Error('Направление не найдено.');
         if (typeof input.html !== 'string' || typeof input.css !== 'string') throw new Error('HTML и CSS должны быть текстом.');

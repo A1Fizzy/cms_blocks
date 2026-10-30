@@ -25,6 +25,8 @@ def initialize():
           id INTEGER PRIMARY KEY, category_id INTEGER NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
           name TEXT NOT NULL, html TEXT NOT NULL DEFAULT '', css TEXT NOT NULL DEFAULT '');
         ''')
+        if 'attributes' not in [row['name'] for row in db.execute('PRAGMA table_info(categories)')]:
+            db.execute('ALTER TABLE categories ADD COLUMN attributes TEXT')
         if first_run:
             db.executemany('INSERT INTO categories(name) VALUES (?)', [('Статьи',), ('Разводящие',), ('Продуктовые',)])
 
@@ -76,6 +78,11 @@ class Handler(SimpleHTTPRequestHandler):
                     if not name or len(name) > 160:
                         return self.reply(400, {'error': 'Введите название длиной до 160 символов'})
                     fields, values = ['name'], [name]
+                    if table == 'categories' and 'attributes' in data:
+                        if not isinstance(data['attributes'], str) or len(data['attributes']) > 100000:
+                            raise ValueError()
+                        fields.append('attributes')
+                        values.append(data['attributes'])
                     if table == 'blocks':
                         if not all(isinstance(data.get(k, ''), str) for k in ('html', 'css')):
                             raise ValueError()

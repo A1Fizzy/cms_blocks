@@ -33,3 +33,16 @@ test('validation failures preserve data and release lock',()=>{
  for(const cat of c.libraryApi('library','GET').categories)c.libraryApi('categories/'+cat.id,'DELETE');
  c.setup();assert.equal(c.libraryApi('library','GET').categories.length,0);
 });
+test('category attributes persist independently, clear explicitly and survive rename',()=>{
+ const {c}=context();c.setup();
+ c.libraryApi('categories/1','PUT',{name:'Статьи',attributes:'Наши курсы — blog_click_course'});
+ c.libraryApi('categories/2','PUT',{name:'Разводящие',attributes:'Другая цель'});
+ c.libraryApi('categories/1','PUT',{name:'Блог'});
+ let categories=c.libraryApi('library','GET').categories;
+ assert.equal(categories[0].attributes,'Наши курсы — blog_click_course');
+ assert.equal(categories[1].attributes,'Другая цель');
+ c.libraryApi('categories/1','PUT',{name:'Блог',attributes:''});
+ assert.equal(c.libraryApi('library','GET').categories[0].attributes,'');
+ assert.throws(()=>c.libraryApi('categories/1','PUT',{name:'Блог',attributes:123}));
+ assert.throws(()=>c.libraryApi('categories/1','PUT',{name:'Блог',attributes:'x'.repeat(100001)}));
+});

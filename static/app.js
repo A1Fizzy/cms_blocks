@@ -25,6 +25,7 @@ function render() {
   const category = library.categories.find(c => c.id === active);
   $('categoryTitle').textContent = category?.name || 'Создайте направление';
   $('deleteCategory').hidden = !category;
+  $('showAttributes').disabled = !category;
   $('addBlock').disabled = !category; $('emptyAdd').hidden = !category;
   const blocks = library.blocks.filter(b => b.category_id === active && b.name.toLocaleLowerCase().includes($('search').value.toLocaleLowerCase()));
   $('count').textContent = blocks.length;
@@ -80,8 +81,36 @@ for (const button of document.querySelectorAll('[data-copy]')) button.onclick = 
   try {
     if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(field.value);
     else {field.focus(); field.select(); if (!document.execCommand('copy')) throw new Error();}
-    toast(button.dataset.copy.toUpperCase() + ' скопирован');
+    toast(button.dataset.copy === 'attributesText' ? 'Список скопирован' : button.dataset.copy.toUpperCase() + ' скопирован');
   } catch {field.focus(); field.select(); toast('Нажмите Ctrl+C или ⌘C, чтобы скопировать выделенный код');}
 };
 window.addEventListener('beforeunload', e => {if (dirty && $('editor').open) {e.preventDefault(); e.returnValue = '';}});
 refresh().catch(error => toast('Не удалось загрузить библиотеку: ' + error.message));
+
+const defaultAttributes = 'Шапка\nНаши курсы — blog_click_course\nШкольная подписка — blog_click_subscription\nПопробовать бесплатно — blog_click_header_free';
+let attributesCategory = null, attributesOriginal = '';
+$('showAttributes').onclick = () => {
+  const category = library.categories.find(c => c.id === active);
+  if (!category) return;
+  attributesCategory = category.id;
+  $('attributesTitle').textContent = 'Атрибуты · ' + category.name;
+  attributesOriginal = category.attributes ?? (category.name === 'Статьи' ? defaultAttributes : '');
+  $('attributesText').value = attributesOriginal;
+  $('attributesDialog').showModal();
+};
+function closeAttributes() {
+  if ($('attributesText').value === attributesOriginal || confirm('Закрыть без сохранения изменений списка?')) $('attributesDialog').close();
+}
+$('closeAttributes').onclick = $('cancelAttributes').onclick = closeAttributes;
+$('attributesDialog').addEventListener('cancel', e => {e.preventDefault(); closeAttributes();});
+$('attributesForm').onsubmit = async e => {
+  e.preventDefault(); e.submitter.disabled = true;
+  const category = library.categories.find(c => c.id === attributesCategory);
+  try {
+    await api('categories/' + attributesCategory, 'PUT', {name: category.name, attributes: $('attributesText').value});
+    $('attributesDialog').close(); await refresh(); toast('Список атрибутов сохранён');
+  } catch (error) {toast(error.message);} finally {e.submitter.disabled = false;}
+};
+window.addEventListener('beforeunload', e => {
+  if ($('attributesDialog').open && $('attributesText').value !== attributesOriginal) {e.preventDefault(); e.returnValue = '';}
+});
